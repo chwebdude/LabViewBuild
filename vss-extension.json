@@ -17,7 +17,7 @@
     ],
     "description": "NI LabVIEW Build tools",
     "categories": [
-        "Build and release"
+        "Azure Pipelines"
     ],
     "icons": {
         "default": "images/icon128.png",
