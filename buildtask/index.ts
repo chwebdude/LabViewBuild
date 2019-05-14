@@ -139,11 +139,20 @@ async function run() {
 
         // Replace all paths
         xml = xml.replace(new RegExp(oldDestDir, 'g'), newDestPath);
-        console.log(oldDestDir+"a");
+        console.log(oldDestDir + "a");
 
         xml = "<?xml version='1.0' encoding='UTF-8'?>\n" + xml;
 
         fs.writeFileSync(projectfile, xml);
+
+
+        // Execute Build
+        console.log("Start build...");
+
+        var arg = "-OperationName ExecuteBuildSpec -ProjectPath \""+ projectfile+"\" -TargetName \"" + targetName + "\"";
+        var runner = tl.tool("LabViewCli.exe").arg(arg);
+        var result = await runner.exec();
+        console.log("Result Code", result);
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
