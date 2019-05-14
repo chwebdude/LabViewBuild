@@ -143,7 +143,7 @@ async function run() {
 
         xml = "<?xml version='1.0' encoding='UTF-8'?>\n" + xml;
 
-        fs.writeFileSync("C:\\Users\\i00202849\\Downloads\\Neuer Ordner (2)\\TEx (1).lvproj", xml);
+        fs.writeFileSync(projectfile, xml);
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);

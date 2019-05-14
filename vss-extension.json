@@ -47,7 +47,13 @@
     },
     "screenshots": [
         {
-            "path": "images/icon128.png"
+            "path": "images/Screenshot1.png"
+        },
+        {
+            "path": "images/Screenshot2.png"
+        },
+        {
+            "path": "images/Screenshot3.png"
         }
     ],
     "links": {
@@ -64,5 +70,12 @@
     "repository": {
         "type": "git",
         "uri": "https://github.com/chwebdude/LabViewBuild"
-    }
+    },
+    "badges": [
+        {
+            "href": "https://dev.azure.com/webdude/DevOps%20Extensions/_build?definitionId=26&_a=summary",
+            "uri":"https://dev.azure.com/webdude/DevOps%20Extensions/_apis/build/status/LabViewBuild",
+            "description": "CI Build" 
+        }
+    ]
 }
