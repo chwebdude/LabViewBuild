@@ -45,7 +45,7 @@ async function run() {
         const minorVersion: number = parseInt(tl.getInput('minorVersion'));
         const patchVersion: number = parseInt(tl.getInput('patchVersion'));
         const buildVersion: number = parseInt(tl.getInput('buildVersion'));
-        
+
         const companyName: string = tl.getInput('companyName');
         const fileDescription: string = tl.getInput('fileDescription');
         const internalName: string = tl.getInput('internalName');
@@ -53,9 +53,9 @@ async function run() {
         const productName: string = tl.getInput('productName');
 
 
-        console.log('Using project file: ', projectfile);
-        console.log('Target Name: ', targetName);
-        console.log('Build specification: ', buildSpecName);
+        console.log('Using project file:', projectfile);
+        console.log('Target Name:', targetName);
+        console.log('Build specification:', buildSpecName);
 
 
         var content = fs.readFileSync(projectfile).toString();
@@ -99,38 +99,49 @@ async function run() {
             setOrAdd(new Property("Bld_version.build", "Int", buildVersion.toString()), buildSpecification);
             console.log("Updated Build version to ", buildVersion);
         }
-        
+
         if (companyName != undefined) {
             setOrAdd(new Property("TgtF_companyName", "Str", companyName), buildSpecification);
             console.log("Updated Company Name to ", companyName);
         }
-        
+
         if (fileDescription != undefined) {
             setOrAdd(new Property("TgtF_fileDescription", "Str", fileDescription), buildSpecification);
             console.log("Updated File Description to ", fileDescription);
         }
-       
+
         if (internalName != undefined) {
             setOrAdd(new Property("TgtF_internalName", "Str", internalName), buildSpecification);
             console.log("Updated Internal Name to ", internalName);
         }
-       
+
         if (copyright != undefined) {
             setOrAdd(new Property("TgtF_legalCopyright", "Str", copyright), buildSpecification);
             console.log("Updated Copyright to ", copyright);
         }
-       
+
         if (productName != undefined) {
             setOrAdd(new Property("TgtF_productName", "Str", productName), buildSpecification);
             console.log("Updated Product Name to ", productName);
         }
-       
-      
+
+        // Update output directory
+        var localDestDirProp = (<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "Bld_localDestDir")[0];
+        var oldDestDir = localDestDirProp.text;
+        var newDestPath = "/" + outputDirectory.replace(/\\/g, "/").replace(":", "");
+        console.log("Outputfolder:", newDestPath);
+        // localDestDirProp.text = newDestPath;
 
 
         // Write back 
         var toXml = new parserToXml(options);
-        var xml = "<?xml version='1.0' encoding='UTF-8'?>\n" + toXml.parse(obj);
+        var xml = <string>toXml.parse(obj);
+
+        // Replace all paths
+        xml = xml.replace(new RegExp(oldDestDir, 'g'), newDestPath);
+        console.log(oldDestDir+"a");
+
+        xml = "<?xml version='1.0' encoding='UTF-8'?>\n" + xml;
 
         fs.writeFileSync("C:\\Users\\i00202849\\Downloads\\Neuer Ordner (2)\\TEx (1).lvproj", xml);
     }
