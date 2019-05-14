@@ -44,6 +44,38 @@
             "defaultValue": "$(Build.ArtifactStagingDirectory)",
             "required": true,
             "helpMarkDown": ""
+        },
+        {
+            "name": "majorVersion",
+            "type": "string",
+            "label": "Major Version",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": ""
+        },
+        {
+            "name": "minorVersion",
+            "type": "string",
+            "label": "Minor Version",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": ""
+        },
+        {
+            "name": "patchVersion",
+            "type": "string",
+            "label": "Patch Version",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": ""
+        },
+        {
+            "name": "buildVersion",
+            "type": "string",
+            "label": "Build Version",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": ""
         }
     ],
     "execution": {

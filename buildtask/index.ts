@@ -13,7 +13,7 @@ interface IProperty {
 }
 
 class Property implements IProperty {
-    constructor(public attr_Name: string, public attr_Type:string, public text:string){};
+    constructor(public attr_Name: string, public attr_Type: string, public text: string) { };
 }
 
 interface Item {
@@ -36,10 +36,15 @@ interface LvFile {
 
 async function run() {
     try {
-        const projectfile: string = tl.getInput('projectFile', true);
+        const projectfile: string = tl.getPathInput('projectFile', true);
         const buildSpecName: string = tl.getInput('buildSpecName', true);
         const targetName: string = tl.getInput('targetName', true);
-        const outputDirectory: string = tl.getInput('outputDirectory', true);
+        const outputDirectory: string = tl.getPathInput('outputDirectory', true);
+
+        const majorVersion: number = parseInt(tl.getInput('majorVersion'));
+        const minorVersion: number = parseInt(tl.getInput('minorVersion'));
+        const patchVersion: number = parseInt(tl.getInput('patchVersion'));
+        const buildVersion: number = parseInt(tl.getInput('buildVersion'));
 
 
 
@@ -64,25 +69,31 @@ async function run() {
 
         var obj = <LvFile>parser.parse(content, options);
 
-        console.log(obj.Project.attr_LVVersion);
 
 
         // Select data        
         var target = getTarget(targetName, obj);
         var buildSpecification = <Item>searchItem(buildSpecName, target);
 
-        // var localDestDir = (<IProperty[]>buildSpecification.IProperty).filter(prop => prop.attr_Name == "Bld_localDestDir")[0].text;
-
-        // Set Version
-        // var autoincrement = (<IProperty[]>buildSpecification.IProperty).filter(prop => prop.attr_Name == "Bld_autoIncrement")[0];
-        // autoincrement.text = "false";
-
         // Major
         setOrAdd(new Property("Bld_autoIncrement", "Bool", "false"), buildSpecification);
-        setOrAdd(new Property("Bld_version.major", "Int", "100"), buildSpecification);
-        setOrAdd(new Property("Bld_version.minor", "Int", "100"), buildSpecification);
-        setOrAdd(new Property("Bld_version.patch", "Int", "100"), buildSpecification);
-        setOrAdd(new Property("Bld_version.build", "Int", "100"), buildSpecification);
+
+        if (majorVersion >= 0) {
+            setOrAdd(new Property("Bld_version.major", "Int", majorVersion.toString()), buildSpecification);
+            console.log("Updated Major version to ", majorVersion);
+        }
+        if (minorVersion >= 0) {
+            setOrAdd(new Property("Bld_version.minor", "Int", minorVersion.toString()), buildSpecification);
+            console.log("Updated Minor version to ", minorVersion);
+        }
+        if (patchVersion >= 0) {
+            setOrAdd(new Property("Bld_version.patch", "Int", patchVersion.toString()), buildSpecification);
+            console.log("Updated Patch version to ", patchVersion);
+        }
+        if (buildVersion >= 0) {
+            setOrAdd(new Property("Bld_version.build", "Int", buildVersion.toString()), buildSpecification);
+            console.log("Updated Build version to ", buildVersion);
+        }
 
 
 
@@ -99,7 +110,6 @@ async function run() {
 }
 
 function setOrAdd(newProperty: IProperty, item: Item) {
-    console.log(item,"mY ITEM");  
     var property = (<IProperty[]>item.Property).filter(prop => prop.attr_Name == newProperty.attr_Name);
     if (property.length == 0) {
         (<IProperty[]>item.Property).push(newProperty)
