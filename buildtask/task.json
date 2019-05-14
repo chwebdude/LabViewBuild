@@ -12,6 +12,18 @@
         "Patch": 0
     },
     "instanceNameFormat": "Version and build $(samplestring)",
+    "groups":[
+        {
+            "name": "versioning",
+            "displayName": "Versioning",
+            "isExpanded": false
+        },
+        {
+            "name": "fileInfo",
+            "displayName": "Target File Information",
+            "isExpanded": false
+        }
+    ],
     "inputs": [
         {
             "name": "projectFile",
@@ -51,7 +63,8 @@
             "label": "Major Version",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": ""
+            "helpMarkDown": "",
+            "groupName": "versioning"
         },
         {
             "name": "minorVersion",
@@ -59,7 +72,8 @@
             "label": "Minor Version",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": ""
+            "helpMarkDown": "",
+            "groupName": "versioning"
         },
         {
             "name": "patchVersion",
@@ -67,7 +81,8 @@
             "label": "Patch Version",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": ""
+            "helpMarkDown": "",
+            "groupName": "versioning"
         },
         {
             "name": "buildVersion",
@@ -75,7 +90,53 @@
             "label": "Build Version",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": ""
+            "helpMarkDown": "",
+            "groupName": "versioning"
+        },
+        {
+            "name": "companyName",
+            "type": "string",
+            "label": "Company Name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "",
+            "groupName": "fileInfo"
+        },
+        {
+            "name": "fileDescription",
+            "type": "string",
+            "label": "File Description",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "",
+            "groupName": "fileInfo"
+        },
+        {
+            "name": "internalName",
+            "type": "string",
+            "label": "Internal Name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "",
+            "groupName": "fileInfo"
+        },
+        {
+            "name": "copyright",
+            "type": "string",
+            "label": "Copyright",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "",
+            "groupName": "fileInfo"
+        },
+        {
+            "name": "productName",
+            "type": "string",
+            "label": "Product Name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "",
+            "groupName": "fileInfo"
         }
     ],
     "execution": {
