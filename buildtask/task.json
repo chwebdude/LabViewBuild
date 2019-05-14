@@ -1,0 +1,54 @@
+{
+    "id": "19b1699a-c437-45a3-a642-03ea21ffbb48",
+    "name": "labview-build",
+    "friendlyName": "NI LabView build",
+    "description": "NI LabVIEW Build project build",
+    "helpMarkDown": "",
+    "category": "Build",
+    "author": "chwebdude",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "instanceNameFormat": "Version and build $(samplestring)",
+    "inputs": [
+        {
+            "name": "projectFile",
+            "type": "filePath",
+            "label": "LabView Project File",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Path to the *.lvproj file"
+        },
+        {
+            "name": "buildSpecName",
+            "type": "string",
+            "label": "Build Specification Name",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": ""
+        },
+        {
+            "name": "targetName",
+            "type": "string",
+            "label": "Target Name",
+            "defaultValue": "My Computer",
+            "required": true,
+            "helpMarkDown": ""
+        },
+        {
+            "name": "outputDirectory",
+            "type": "string",
+            "label": "Output Directory",
+            "defaultValue": "$(Build.ArtifactStagingDirectory)",
+            "required": true,
+            "helpMarkDown": ""
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "index.js"
+        }
+    }
+}

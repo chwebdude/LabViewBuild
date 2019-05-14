@@ -1,0 +1,68 @@
+{
+    "manifestVersion": 1,
+    "id": "labview-build",
+    "name": "LabView Build Tools",
+    "version": "1.0.0",
+    "publisher": "chwebdude",
+    "public": false,
+    "tags": [
+        "Build",
+        "NI",
+        "LabVIEW"
+    ],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "description": "NI LabVIEW Build tools",
+    "categories": [
+        "Build and release"
+    ],
+    "icons": {
+        "default": "images/icon128.png",
+        "large": "images/icon512.png"
+    },
+    "files": [
+        {
+            "path": "buildtask"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "custom-build-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "buildtask"
+            }
+        }
+    ],
+    "content": {
+        "details": {
+            "path": "Readme.md"
+        }
+    },
+    "screenshots": [
+        {
+            "path": "images/icon128.png"
+        }
+    ],
+    "links": {
+        "repository": {
+            "uri": "https://github.com/chwebdude/LabViewBuild"
+        },
+        "issues": {
+            "uri": "https://github.com/chwebdude/LabViewBuild/issues"
+        },
+        "support": {
+            "uri": "https://github.com/chwebdude/LabViewBuild"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/chwebdude/LabViewBuild"
+    }
+}
