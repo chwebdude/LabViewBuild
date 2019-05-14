@@ -149,7 +149,7 @@ async function run() {
         // Execute Build
         console.log("Start build...");
 
-        var lvStart = tl.tool("C:\Program Files\National Instruments\LabVIEW 2018");
+        var lvStart = tl.tool("C:\\Program Files\\National Instruments\\LabVIEW 2018\\LabVIEW.exe");
         lvStart.exec();
         console.log("LabVIEW started. Waiting...");
 
