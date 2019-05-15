@@ -132,7 +132,13 @@ async function run() {
         var oldDestDir = localDestDirProp.text;
         console.log("Old output folder: ", oldDestDir);
         var newDestPath = "/" + outputDirectory.replace(/\\/g, "/").replace(":", "");
-        console.log("New output folder:", newDestPath + "||||");      
+        console.log("New output folder:", newDestPath);      
+
+        // Update all Destination paths
+        var count =parseInt((<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "DestinationCount")[0].text);
+        for (let index = 0; index < count; index++) {
+            setOrAdd(new Property("Destination["+ index +"].path.type", "Str", "&lt;none&gt;"), buildSpecification);
+        }
 
         // Write back 
         var toXml = new parserToXml(options);
@@ -145,6 +151,7 @@ async function run() {
 
         fs.writeFileSync(projectfile, xml);
 
+        console.log("Projectfile updated!\n");
 
         // Execute Build
         console.log("Start build...");
