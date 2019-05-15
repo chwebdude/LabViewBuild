@@ -39,7 +39,8 @@ async function run() {
         const projectfile: string = tl.getPathInput('projectFile', true);
         const buildSpecName: string = tl.getInput('buildSpecName', true);
         const targetName: string = tl.getInput('targetName', true);
-        const outputDirectory: string = tl.getPathInput('outputDirectory', true);
+        var outputDirectory: string = tl.getPathInput('outputDirectory', true);        
+        outputDirectory = tl.resolve(outputDirectory);                
 
         const majorVersion: number = parseInt(tl.getInput('majorVersion'));
         const minorVersion: number = parseInt(tl.getInput('minorVersion'));
@@ -126,6 +127,7 @@ async function run() {
         }
 
         // Update output directory
+        removeProperty("Bld_localDestDirType", buildSpecification);
         var localDestDirProp = (<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "Bld_localDestDir")[0];
         var oldDestDir = localDestDirProp.text;
         console.log("Old output folder: ", oldDestDir);
@@ -163,6 +165,10 @@ function setOrAdd(newProperty: IProperty, item: Item) {
     } else {
         property[0].text = newProperty.text;
     }
+}
+
+function removeProperty(propertyName:string, item:Item){
+    item.Property = (<Property[]>item.Property).filter(prop => prop.attr_Name != propertyName);
 }
 
 function getTarget(name: string, lvFile: LvFile): Item {
