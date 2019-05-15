@@ -128,8 +128,10 @@ async function run() {
         // Update output directory
         var localDestDirProp = (<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "Bld_localDestDir")[0];
         var oldDestDir = localDestDirProp.text;
+        console.log("Old output folder: ", oldDestDir);
         var newDestPath = "/" + outputDirectory.replace(/\\/g, "/").replace(":", "");
-        console.log("Outputfolder:", newDestPath);
+        console.log("Outputfolder:", newDestPath + "||||");
+
         // localDestDirProp.text = newDestPath;
 
 
@@ -148,7 +150,7 @@ async function run() {
 
         // Execute Build
         console.log("Start build...");
-        var arg = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName ];
+        var arg = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName];
         var runner = tl.tool("LabViewCli.exe").arg(arg);
         var result = await runner.exec();
         console.log("Result Code", result);
@@ -202,9 +204,9 @@ function searchItem(name: string, item: Item): Item | null {
     return null;
 }
 
-function sleep(ms:number){
-    return new Promise(resolve=>{
-        setTimeout(resolve,ms)
+function sleep(ms: number) {
+    return new Promise(resolve => {
+        setTimeout(resolve, ms)
     })
 }
 
