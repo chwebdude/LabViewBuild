@@ -130,10 +130,7 @@ async function run() {
         var oldDestDir = localDestDirProp.text;
         console.log("Old output folder: ", oldDestDir);
         var newDestPath = "/" + outputDirectory.replace(/\\/g, "/").replace(":", "");
-        console.log("Outputfolder:", newDestPath + "||||");
-
-        // localDestDirProp.text = newDestPath;
-
+        console.log("New output folder:", newDestPath + "||||");      
 
         // Write back 
         var toXml = new parserToXml(options);
@@ -141,7 +138,6 @@ async function run() {
 
         // Replace all paths
         xml = xml.replace(new RegExp(oldDestDir, 'g'), newDestPath);
-        console.log(oldDestDir + "a");
 
         xml = "<?xml version='1.0' encoding='UTF-8'?>\n" + xml;
 
