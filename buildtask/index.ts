@@ -155,7 +155,8 @@ async function run() {
 
         // Execute Build
         console.log("Start build...");
-        var arg = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName];
+        var logfilePath = tl.resolve("labviewbuild.log");
+        var arg = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-LogFilePath", logfilePath];
         var runner = tl.tool("LabViewCli.exe").arg(arg);
         var result = await runner.exec();
         console.log("Result Code", result);
