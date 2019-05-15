@@ -3,7 +3,7 @@ import parser = require('fast-xml-parser');
 import parserToXml = parser.j2xParser;
 import fs = require('fs');
 import { isArray } from 'util';
-import { isatty } from 'tty';
+
 
 
 interface IProperty {
@@ -148,13 +148,6 @@ async function run() {
 
         // Execute Build
         console.log("Start build...");
-
-        var lvStart = tl.tool("C:\\Program Files\\National Instruments\\LabVIEW 2018\\LabVIEW.exe");
-        lvStart.exec();
-        console.log("LabVIEW started. Waiting...");
-
-        await sleep(15000);
-
         var arg = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName ];
         var runner = tl.tool("LabViewCli.exe").arg(arg);
         var result = await runner.exec();

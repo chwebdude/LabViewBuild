@@ -11,7 +11,7 @@
         "Minor": 1,
         "Patch": 0
     },
-    "instanceNameFormat": "Version and build $(samplestring)",
+    "instanceNameFormat": "LabVIEW: Version and build $(projectFile)",
     "groups":[
         {
             "name": "versioning",
