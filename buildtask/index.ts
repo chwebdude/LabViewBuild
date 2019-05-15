@@ -213,10 +213,4 @@ function searchItem(name: string, item: Item): Item | null {
     return null;
 }
 
-function sleep(ms: number) {
-    return new Promise(resolve => {
-        setTimeout(resolve, ms)
-    })
-}
-
 run();
