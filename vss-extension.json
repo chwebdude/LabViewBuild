@@ -4,7 +4,7 @@
     "name": "LabView Build Tools",
     "version": "1.0.0",
     "publisher": "chwebdude",
-    "public": false,
+    "public": true,
     "tags": [
         "Build",
         "NI",
