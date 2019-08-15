@@ -19,6 +19,7 @@ class Property implements IProperty {
 interface Item {
     attr_Name: string;
     attr_URL: string;
+    attr_Type: string
     Property: IProperty | IProperty[];
     Item: Item | Item[];
 }
@@ -60,7 +61,7 @@ async function run() {
 
 
         var content = fs.readFileSync(projectfile).toString();
-
+        console.log("##vso[task.debug]Filecontent read");
 
         var options = {
             attributeNamePrefix: "attr_",
@@ -74,19 +75,26 @@ async function run() {
         };
 
         var obj = <LvFile>parser.parse(content, options);
-
+        console.log("##vso[task.debug]File parsed");
 
 
         // Select data        
         var target = getTarget(targetName, obj);
-        var buildSpecification = <Item>searchItem(buildSpecName, target);
+        console.log("##vso[task.debug]Target selected");
 
-        // Major
+        var buildSpecifications = <Item>searchItemByType("Build", target);
+        console.log("##vso[task.debug]Buildspecifications selected");
+
+        var buildSpecification = <Item>searchItem(buildSpecName, buildSpecifications);
+        console.log("##vso[task.debug]Buildspecification selected");
+
+        // Disable Autoincrement
         setOrAdd(new Property("Bld_autoIncrement", "Bool", "false"), buildSpecification);
+        console.log("##vso[task.debug]Autoincrement set to false");
 
         if (majorVersion >= 0) {
             setOrAdd(new Property("Bld_version.major", "Int", majorVersion.toString()), buildSpecification);
-            console.log("Updated Major version to ", majorVersion);
+            console.log("Updated Major version to ", majorVersion);            
         }
         if (minorVersion >= 0) {
             setOrAdd(new Property("Bld_version.minor", "Int", minorVersion.toString()), buildSpecification);
@@ -167,6 +175,7 @@ async function run() {
 }
 
 function setOrAdd(newProperty: IProperty, item: Item) {
+    console.log("new Property", item);
     var property = (<IProperty[]>item.Property).filter(prop => prop.attr_Name == newProperty.attr_Name);
     if (property.length == 0) {
         (<IProperty[]>item.Property).push(newProperty)
@@ -209,6 +218,28 @@ function searchItem(name: string, item: Item): Item | null {
     } else {
         if (item.Item != undefined) {
             return searchItem(name, item.Item);
+        }
+    }
+    return null;
+}
+
+
+function searchItemByType(type: string, item: Item): Item | null {
+    if (item.attr_Type == type) {
+        console.log("FOUND");
+        return item;
+    }
+
+    if (isArray(item.Item)) {
+        for (let index = 0; index < item.Item.length; index++) {
+            var res = searchItemByType(type, item.Item[index]);
+            if (res != null)
+                return res;
+        }
+
+    } else {
+        if (item.Item != undefined) {
+            return searchItemByType(type, item.Item);
         }
     }
     return null;
