@@ -2,7 +2,6 @@ import tl = require('azure-pipelines-task-lib/task');
 import parser = require('fast-xml-parser');
 import parserToXml = parser.j2xParser;
 import fs = require('fs');
-import { isArray } from 'util';
 import trm = require('azure-pipelines-task-lib/toolrunner');
 import path = require('path');
 import { debug, error } from 'azure-pipelines-task-lib/task';
@@ -209,7 +208,7 @@ function removeProperty(propertyName:string, item:Item){
 }
 
 function getTarget(name: string, lvFile: LvFile): Item {
-    if (isArray(lvFile.Project.Item)) {
+    if (Array.isArray(lvFile.Project.Item)) {
         for (let index = 0; index < lvFile.Project.Item.length; index++) {
             var res = searchItem(name, lvFile.Project.Item[index]);
             if (res != null)
@@ -228,7 +227,7 @@ function searchItem(name: string, item: Item): Item | null {
         return item;
     }
 
-    if (isArray(item.Item)) {
+    if (Array.isArray(item.Item)) {
         for (let index = 0; index < item.Item.length; index++) {
             var res = searchItem(name, item.Item[index]);
             if (res != null)
@@ -250,7 +249,7 @@ function searchItemByType(type: string, item: Item): Item | null {
         return item;
     }
 
-    if (isArray(item.Item)) {
+    if (Array.isArray(item.Item)) {
         for (let index = 0; index < item.Item.length; index++) {
             var res = searchItemByType(type, item.Item[index]);
             if (res != null)
