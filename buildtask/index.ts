@@ -54,6 +54,9 @@ async function run() {
         const copyright: string = tl.getInput('copyright');
         const productName: string = tl.getInput('productName');
 
+        const portNumber: number = parseInt(tl.getInput('portNumber'));
+        const retries: number = parseInt(tl.getInput('retries'));
+        const clipath: string = tl.getInput('clipath');
 
         console.log('Using project file:', projectfile);
         console.log('Target Name:', targetName);
@@ -162,12 +165,25 @@ async function run() {
         console.log("Projectfile updated!\n");
 
         // Execute Build
-        console.log("Start build...");
-        var logfilePath = tl.resolve("labviewbuild.log");
-        var arg = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-LogFilePath", logfilePath];
-        var runner = tl.tool("LabViewCli.exe").arg(arg);
-        var result = await runner.exec();
-        console.log("Result Code", result);
+        for (let i = 1; i <= retries; i++) {
+            try {
+                console.log("Build attempt " + i);
+
+                console.log("Start build...");
+                var logfilePath = tl.resolve("labviewbuild.log");
+                var arg = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-PortNumber", portNumber, "-LogFilePath", logfilePath];
+                var runner = tl.tool(clipath).arg(arg);
+                var result = await runner.exec();
+                console.log("Result Code", result);
+
+                if(result == 0)
+                    return;
+            } catch (error) {
+                console.log("Failed");
+            }
+            
+        }
+        
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);

@@ -22,6 +22,11 @@
             "name": "fileInfo",
             "displayName": "Target File Information",
             "isExpanded": false
+        },
+        {
+            "name": "execution",
+            "displayName": "Execution",
+            "isExpanded": false
         }
     ],
     "inputs": [
@@ -137,6 +142,30 @@
             "required": false,
             "helpMarkDown": "",
             "groupName": "fileInfo"
+        },
+        {
+            "name": "clipath",
+            "type": "string",
+            "label": "CLI Path",
+            "defaultValue": "LabViewCli.exe",
+            "required": true,
+            "groupName": "execution"
+        },
+        {
+            "name": "portNumber",
+            "type": "int",
+            "label": "VI Server Port",
+            "defaultValue": "3363",
+            "required": true,
+            "groupName": "execution"
+        },
+        {
+            "name": "retries",
+            "type": "int",
+            "label": "Retries",
+            "defaultValue": "2",
+            "required": true,
+            "groupName": "execution"
         }
     ],
     "execution": {
