@@ -3,6 +3,8 @@ import parser = require('fast-xml-parser');
 import parserToXml = parser.j2xParser;
 import fs = require('fs');
 import { isArray } from 'util';
+import trm = require('azure-pipelines-task-lib/toolrunner');
+import path = require('path');
 
 
 
@@ -37,32 +39,32 @@ interface LvFile {
 
 async function run() {
     try {
-        const projectfile: string = tl.getPathInput('projectFile', true);
-        const buildSpecName: string = tl.getInput('buildSpecName', true);
-        const targetName: string = tl.getInput('targetName', true);
-        var outputDirectory: string = tl.getPathInput('outputDirectory', true);        
+        const projectfile = <string> tl.getPathInput('projectFile', true);
+        const buildSpecName = <string> tl.getInput('buildSpecName', true);
+        const targetName = <string> tl.getInput('targetName', true);
+        var outputDirectory = tl.getPathInput('outputDirectory', true);        
         outputDirectory = tl.resolve(outputDirectory);                
 
-        const majorVersion: number = parseInt(tl.getInput('majorVersion'));
-        const minorVersion: number = parseInt(tl.getInput('minorVersion'));
-        const patchVersion: number = parseInt(tl.getInput('patchVersion'));
-        const buildVersion: number = parseInt(tl.getInput('buildVersion'));
+        const majorVersion: number = parseInt(<string>tl.getInput('majorVersion'));
+        const minorVersion: number = parseInt(<string>tl.getInput('minorVersion'));
+        const patchVersion: number = parseInt(<string>tl.getInput('patchVersion'));
+        const buildVersion: number = parseInt(<string>tl.getInput('buildVersion'));
 
-        const companyName: string = tl.getInput('companyName');
-        const fileDescription: string = tl.getInput('fileDescription');
-        const internalName: string = tl.getInput('internalName');
-        const copyright: string = tl.getInput('copyright');
-        const productName: string = tl.getInput('productName');
+        const companyName = tl.getInput('companyName');
+        const fileDescription = tl.getInput('fileDescription');
+        const internalName = tl.getInput('internalName');
+        const copyright = tl.getInput('copyright');
+        const productName = tl.getInput('productName');
 
-        const portNumber: number = parseInt(tl.getInput('portNumber'));
-        const retries: number = parseInt(tl.getInput('retries'));
-        const clipath: string = tl.getInput('clipath');
+        const portNumber: number = parseInt(<string>tl.getInput('portNumber', true));
+        const retries: number = parseInt(<string>tl.getInput('retries'));
+        const clipath = <string>tl.getInput('clipath', true);
 
         console.log('Using project file:', projectfile);
         console.log('Target Name:', targetName);
         console.log('Build specification:', buildSpecName);
 
-
+        
         var content = fs.readFileSync(projectfile).toString();
         console.log("##vso[task.debug]Filecontent read");
 
@@ -171,8 +173,8 @@ async function run() {
 
                 console.log("Start build...");
                 var logfilePath = tl.resolve("labviewbuild.log");
-                var arg = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-PortNumber", portNumber, "-LogFilePath", logfilePath];
-                var runner = tl.tool(clipath).arg(arg);
+                var arg : string[] = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-PortNumber", portNumber.toString(), "-LogFilePath", logfilePath];
+                var runner: trm.ToolRunner = tl.tool(clipath).arg(arg);
                 var result = await runner.exec();
                 console.log("Result Code", result);
 
@@ -184,7 +186,7 @@ async function run() {
         //     }
             
         // }
-        tl.setResult(tl.TaskResult.Failed, "Failed to build project");
+        // tl.setResult(tl.TaskResult.Failed, "Failed to build project");
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
