@@ -5,6 +5,7 @@ import fs = require('fs');
 import { isArray } from 'util';
 import trm = require('azure-pipelines-task-lib/toolrunner');
 import path = require('path');
+import { debug, error } from 'azure-pipelines-task-lib/task';
 
 
 
@@ -167,26 +168,26 @@ async function run() {
         console.log("Projectfile updated!\n");
 
         // Execute Build
-        // for (let i = 1; i <= retries; i++) {
-        //     try {
-        //         console.log("Build attempt " + i);
+        for (let i = 1; i <= retries; i++) {
+            try {
+                console.log("Build attempt " + i);
 
-                console.log("Start build...");
+                console.log("Starting build...");
                 var logfilePath = tl.resolve("labviewbuild.log");
                 var arg : string[] = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-PortNumber", portNumber.toString(), "-LogFilePath", logfilePath];
                 var runner: trm.ToolRunner = tl.tool(clipath).arg(arg);
-                var result = await runner.exec();
-                console.log("Result Code", result);
-
-                // if(result == 0)
-                //     return;
-        //     } catch (error) {
-        //         console.log("Failed");
-        //         console.log(error.message);
-        //     }
+                var result = runner.execSync();
+                console.log("Result Code" + result);
+                
+                if(result.code == 0)
+                    return;
+            } catch (e) {
+                tl.warning("Failed");
+                tl.warning(e.message);
+            }
             
-        // }
-        // tl.setResult(tl.TaskResult.Failed, "Failed to build project");
+        }
+        tl.setResult(tl.TaskResult.Failed, "Failed to build project");
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
@@ -194,7 +195,7 @@ async function run() {
 }
 
 function setOrAdd(newProperty: IProperty, item: Item) {
-    console.log("new Property", item);
+    debug("new Property: " + item);
     var property = (<IProperty[]>item.Property).filter(prop => prop.attr_Name == newProperty.attr_Name);
     if (property.length == 0) {
         (<IProperty[]>item.Property).push(newProperty)
