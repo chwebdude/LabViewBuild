@@ -180,10 +180,11 @@ async function run() {
                     return;
             } catch (error) {
                 console.log("Failed");
+                console.log(error.message);
             }
             
         }
-        
+        tl.setResult(tl.TaskResult.Failed, "Failed to build project");
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
