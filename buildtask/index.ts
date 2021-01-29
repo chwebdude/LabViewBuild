@@ -99,44 +99,44 @@ async function run() {
 
         if (majorVersion >= 0) {
             setOrAdd(new Property("Bld_version.major", "Int", majorVersion.toString()), buildSpecification);
-            console.log("Updated Major version to ", majorVersion);            
+            console.log("Updated Major version to: ", majorVersion);            
         }
         if (minorVersion >= 0) {
             setOrAdd(new Property("Bld_version.minor", "Int", minorVersion.toString()), buildSpecification);
-            console.log("Updated Minor version to ", minorVersion);
+            console.log("Updated Minor version to: ", minorVersion);
         }
         if (patchVersion >= 0) {
             setOrAdd(new Property("Bld_version.patch", "Int", patchVersion.toString()), buildSpecification);
-            console.log("Updated Patch version to ", patchVersion);
+            console.log("Updated Patch version to: ", patchVersion);
         }
         if (buildVersion >= 0) {
             setOrAdd(new Property("Bld_version.build", "Int", buildVersion.toString()), buildSpecification);
-            console.log("Updated Build version to ", buildVersion);
+            console.log("Updated Build version to: ", buildVersion);
         }
 
         if (companyName != undefined) {
             setOrAdd(new Property("TgtF_companyName", "Str", companyName), buildSpecification);
-            console.log("Updated Company Name to ", companyName);
+            console.log("Updated Company Name to: ", companyName);
         }
 
         if (fileDescription != undefined) {
             setOrAdd(new Property("TgtF_fileDescription", "Str", fileDescription), buildSpecification);
-            console.log("Updated File Description to ", fileDescription);
+            console.log("Updated File Description to: ", fileDescription);
         }
 
         if (internalName != undefined) {
             setOrAdd(new Property("TgtF_internalName", "Str", internalName), buildSpecification);
-            console.log("Updated Internal Name to ", internalName);
+            console.log("Updated Internal Name to: ", internalName);
         }
 
         if (copyright != undefined) {
             setOrAdd(new Property("TgtF_legalCopyright", "Str", copyright), buildSpecification);
-            console.log("Updated Copyright to ", copyright);
+            console.log("Updated Copyright to: ", copyright);
         }
 
         if (productName != undefined) {
             setOrAdd(new Property("TgtF_productName", "Str", productName), buildSpecification);
-            console.log("Updated Product Name to ", productName);
+            console.log("Updated Product Name to: ", productName);
         }
 
         // Update output directory
@@ -224,6 +224,7 @@ function getTarget(name: string, lvFile: LvFile): Item {
 
 function searchItem(name: string, item: Item): Item | null {
     if (item.attr_Name == name) {
+        debug("FOUND");
         return item;
     }
 
@@ -245,7 +246,7 @@ function searchItem(name: string, item: Item): Item | null {
 
 function searchItemByType(type: string, item: Item): Item | null {
     if (item.attr_Type == type) {
-        console.log("FOUND");
+        debug("FOUND");
         return item;
     }
 
