@@ -165,9 +165,9 @@ async function run() {
         console.log("Projectfile updated!\n");
 
         // Execute Build
-        for (let i = 1; i <= retries; i++) {
-            try {
-                console.log("Build attempt " + i);
+        // for (let i = 1; i <= retries; i++) {
+        //     try {
+        //         console.log("Build attempt " + i);
 
                 console.log("Start build...");
                 var logfilePath = tl.resolve("labviewbuild.log");
@@ -176,14 +176,14 @@ async function run() {
                 var result = await runner.exec();
                 console.log("Result Code", result);
 
-                if(result == 0)
-                    return;
-            } catch (error) {
-                console.log("Failed");
-                console.log(error.message);
-            }
+                // if(result == 0)
+                //     return;
+        //     } catch (error) {
+        //         console.log("Failed");
+        //         console.log(error.message);
+        //     }
             
-        }
+        // }
         tl.setResult(tl.TaskResult.Failed, "Failed to build project");
     }
     catch (err) {
