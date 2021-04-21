@@ -16,13 +16,20 @@
 				<Property Name="utf.test.bind" Type="Str">mult.vi</Property>
 				<Property Name="utf.vector.test.bind" Type="Str">D04D789A-A827-F2AE-B8B4-01EC5F1D4FA4</Property>
 			</Item>
-			<Item Name="TestMult.lvvect" Type="TestVectorItem" URL="../Unit Test Files/TestMult.lvvect"/>
+			<Item Name="TestMult.lvvect" Type="TestVectorItem" URL="../Unit Test Files/TestMult.lvvect">
+				<Property Name="utf.vector.test.bind" Type="Str">741BB31C-C678-8293-5150-7A8A2312D56A;D04D789A-A827-F2AE-B8B4-01EC5F1D4FA4</Property>
+			</Item>
+			<Item Name="TestMultOK.lvtest" Type="TestItem" URL="../Unit Test Files/TestMultOK.lvtest">
+				<Property Name="utf.test.bind" Type="Str">mult.vi</Property>
+				<Property Name="utf.vector.test.bind" Type="Str">741BB31C-C678-8293-5150-7A8A2312D56A</Property>
+			</Item>
 		</Item>
 		<Item Name="Vis" Type="Folder">
 			<Item Name="CreateReportDirectory.vi" Type="VI" URL="../Vis/CreateReportDirectory.vi"/>
 			<Item Name="mult.vi" Type="VI" URL="../Vis/mult.vi"/>
 			<Item Name="OpenWindowsExplorer.vi" Type="VI" URL="../Vis/OpenWindowsExplorer.vi"/>
 		</Item>
+		<Item Name="LaunchUnitTests.vi" Type="VI" URL="../LaunchUnitTests.vi"/>
 		<Item Name="Main.vi" Type="VI" URL="../Main.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
@@ -82,6 +89,72 @@
 				<Property Name="TgtF_targetfileGUID" Type="Str">{7AD2653C-6A30-4F77-9D24-D1DA079791C2}</Property>
 				<Property Name="TgtF_targetfileName" Type="Str">Multiplication.exe</Property>
 				<Property Name="TgtF_versionIndependent" Type="Bool">true</Property>
+			</Item>
+			<Item Name="Multiplication - Package" Type="{E661DAE2-7517-431F-AC41-30807A3BDA38}">
+				<Property Name="NIPKG_addToFeed" Type="Bool">true</Property>
+				<Property Name="NIPKG_allDependenciesToFeed" Type="Bool">false</Property>
+				<Property Name="NIPKG_allDependenciesToSystemLink" Type="Bool">false</Property>
+				<Property Name="NIPKG_certificates" Type="Bool">true</Property>
+				<Property Name="NIPKG_createInstaller" Type="Bool">false</Property>
+				<Property Name="NIPKG_feedLocation" Type="Path">/D/LabVIEW/git/builds/NI_AB_PROJECTNAME/Feed</Property>
+				<Property Name="NIPKG_installerArtifacts" Type="Str"></Property>
+				<Property Name="NIPKG_installerBuiltBefore" Type="Bool">false</Property>
+				<Property Name="NIPKG_installerDestination" Type="Path">../builds/NI_AB_PROJECTNAME/Multiplication - Package/Package Installer</Property>
+				<Property Name="NIPKG_installerDestination.Type" Type="Str">relativeToCommon</Property>
+				<Property Name="NIPKG_lastBuiltPackage" Type="Str">multiplication-packate_1.0.0-0_windows_all.nipkg</Property>
+				<Property Name="NIPKG_license" Type="Ref"></Property>
+				<Property Name="NIPKG_packageVersion" Type="Bool">false</Property>
+				<Property Name="NIPKG_releaseNotes" Type="Str"></Property>
+				<Property Name="NIPKG_storeProduct" Type="Bool">false</Property>
+				<Property Name="NIPKG_VisibleForRuntimeDeployment" Type="Bool">false</Property>
+				<Property Name="PKG_actions.Count" Type="Int">0</Property>
+				<Property Name="PKG_autoIncrementBuild" Type="Bool">false</Property>
+				<Property Name="PKG_autoSelectDeps" Type="Bool">true</Property>
+				<Property Name="PKG_buildNumber" Type="Int">0</Property>
+				<Property Name="PKG_buildSpecName" Type="Str">Multiplication - Package</Property>
+				<Property Name="PKG_dependencies.Count" Type="Int">1</Property>
+				<Property Name="PKG_dependencies[0].Enhanced" Type="Bool">false</Property>
+				<Property Name="PKG_dependencies[0].MaxVersion" Type="Str"></Property>
+				<Property Name="PKG_dependencies[0].MaxVersionInclusive" Type="Bool">false</Property>
+				<Property Name="PKG_dependencies[0].MinVersion" Type="Str">20.1.0.49152-0+f0</Property>
+				<Property Name="PKG_dependencies[0].MinVersionType" Type="Str">Inclusive</Property>
+				<Property Name="PKG_dependencies[0].NIPKG.DisplayName" Type="Str">LabVIEW Runtime (32-bit)</Property>
+				<Property Name="PKG_dependencies[0].Package.Name" Type="Str">ni-labview-2020-runtime-engine-x86</Property>
+				<Property Name="PKG_dependencies[0].Package.Section" Type="Str">Programming Environments</Property>
+				<Property Name="PKG_dependencies[0].Package.Synopsis" Type="Str">The LabVIEW Runtime is a software add-on that enables engineers to run executables on a nondevelopment machine.</Property>
+				<Property Name="PKG_dependencies[0].Relationship" Type="Str">Required Dependency</Property>
+				<Property Name="PKG_dependencies[0].Type" Type="Str">NIPKG</Property>
+				<Property Name="PKG_description" Type="Str"></Property>
+				<Property Name="PKG_destinations.Count" Type="Int">1</Property>
+				<Property Name="PKG_destinations[0].ID" Type="Str">{82D81E7D-71AC-41D8-A446-F88F7982CF8C}</Property>
+				<Property Name="PKG_destinations[0].Subdir.Directory" Type="Str">MultiplicationUnitTest</Property>
+				<Property Name="PKG_destinations[0].Subdir.Parent" Type="Str">root_5</Property>
+				<Property Name="PKG_destinations[0].Type" Type="Str">Subdir</Property>
+				<Property Name="PKG_displayName" Type="Str">Multiplication package</Property>
+				<Property Name="PKG_displayVersion" Type="Str"></Property>
+				<Property Name="PKG_feedDescription" Type="Str"></Property>
+				<Property Name="PKG_feedName" Type="Str"></Property>
+				<Property Name="PKG_homepage" Type="Str"></Property>
+				<Property Name="PKG_hostname" Type="Str"></Property>
+				<Property Name="PKG_maintainer" Type="Str">METAS &lt;&gt;</Property>
+				<Property Name="PKG_output" Type="Path">/D/LabVIEW/git/builds/NI_AB_PROJECTNAME/Package</Property>
+				<Property Name="PKG_packageName" Type="Str">multiplication-packate</Property>
+				<Property Name="PKG_publishToSystemLink" Type="Bool">false</Property>
+				<Property Name="PKG_section" Type="Str">Application Software</Property>
+				<Property Name="PKG_shortcuts.Count" Type="Int">1</Property>
+				<Property Name="PKG_shortcuts[0].Destination" Type="Str">root_8</Property>
+				<Property Name="PKG_shortcuts[0].Name" Type="Str">Multiplication</Property>
+				<Property Name="PKG_shortcuts[0].Path" Type="Path">MultiplicationUnitTest</Property>
+				<Property Name="PKG_shortcuts[0].Target.Child" Type="Str">{7AD2653C-6A30-4F77-9D24-D1DA079791C2}</Property>
+				<Property Name="PKG_shortcuts[0].Target.Destination" Type="Str">{82D81E7D-71AC-41D8-A446-F88F7982CF8C}</Property>
+				<Property Name="PKG_shortcuts[0].Target.Source" Type="Ref">/My Computer/Build Specifications/Multiplication</Property>
+				<Property Name="PKG_shortcuts[0].Type" Type="Str">NIPKG</Property>
+				<Property Name="PKG_sources.Count" Type="Int">1</Property>
+				<Property Name="PKG_sources[0].Destination" Type="Str">{82D81E7D-71AC-41D8-A446-F88F7982CF8C}</Property>
+				<Property Name="PKG_sources[0].ID" Type="Ref">/My Computer/Build Specifications/Multiplication</Property>
+				<Property Name="PKG_sources[0].Type" Type="Str">EXE Build</Property>
+				<Property Name="PKG_synopsis" Type="Str">MultiplicationUnitTest</Property>
+				<Property Name="PKG_version" Type="Str">1.0.0</Property>
 			</Item>
 		</Item>
 	</Item>

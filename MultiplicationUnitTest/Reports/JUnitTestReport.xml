@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 
 <testsuites assertions="0" name="MultiplicationUnitTest.lvproj" skipped="0" skips="0" timestamp="0.000000">
-	<testsuite assertions="0" disabled="0" errors="1" failures="0" name="MultiplicationUnitTest.lvproj\My Computer\Unit Test Files\TestMult.lvtest" skipped="0" skips="0" tests="0" time="0.000000" timestamp="0.000000">
-		<testcase assertions="0" name="1" time="0.000000" timestamp="0.000000">
-			<error message="The VI under test is running. &#xA;Please stop the VI and try again." type="OtherError"></error>
+	<testsuite assertions="0" disabled="0" errors="0" failures="1" name="MultiplicationUnitTest.lvproj\My Computer\Unit Test Files\TestMult.lvtest" skipped="0" skips="0" tests="2" time="11.680036" timestamp="0.000000">
+		<testcase assertions="0" name="Test Case 1" time="0.522000" timestamp="0.000000">
+			<failure></failure>
 		</testcase>
+		<testcase assertions="0" name="Test Case 2" time="0.507000" timestamp="0.000000"/>
+	</testsuite>
+	<testsuite assertions="0" disabled="0" errors="0" failures="0" name="MultiplicationUnitTest.lvproj\My Computer\Unit Test Files\TestMultOK.lvtest" skipped="0" skips="0" tests="1" time="6.121077" timestamp="0.000000">
+		<testcase assertions="0" name="Test Case 2" time="0.534000" timestamp="0.000000"/>
 	</testsuite>
 </testsuites>
