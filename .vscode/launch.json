@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Launch EXE",
       "program": "${workspaceFolder}/buildtask/index.ts",
       "preLaunchTask": "tsc: build - buildtask/tsconfig.json",
       "outFiles": ["${workspaceFolder}/buildtask/index.js"],
@@ -26,6 +26,29 @@
       "stopOnEntry": false,
       "console": "integratedTerminal",
       "sourceMaps": true
-    }
+    },
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Package",
+        "program": "${workspaceFolder}/buildtask/index.ts",
+        "preLaunchTask": "tsc: build - buildtask/tsconfig.json",
+        "outFiles": ["${workspaceFolder}/buildtask/index.js"],
+        "runtimeExecutable": null,
+        "runtimeArgs": ["--nolazy"],
+        "env": {
+          "TASK_TEST_TRACE": "1",
+          "NODE_ENV": "DEVELOPMENT",
+          "INPUT_projectFile": "${workspaceFolder}/test-project/prj.lvproj",
+          "INPUT_buildSpecName": "AlphaGuard DF50-2000 - Package",
+          "INPUT_targetName": "My Computer",
+          "INPUT_outputDirectory": "${workspaceFolder}/test-out",
+          "INPUT_portNumber": "1234",
+          "INPUT_clipath": "test"
+        },
+        "stopOnEntry": false,
+        "console": "integratedTerminal",
+        "sourceMaps": true
+      }
   ]
 }

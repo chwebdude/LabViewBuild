@@ -98,7 +98,7 @@ async function run() {
         try {
             buildSepcificationsNode = <Item>searchItem("Build Specifications", target);
             debug("Item with name 'Build Specifications' selected. Hint: the name 'Build Specifications' is not settable by the build task");
-        } catch(ex) {
+        } catch (ex) {
             error("Node 'Build Specifications' not found");
             throw ex;
         }
@@ -114,65 +114,133 @@ async function run() {
         }
 
 
-        // Disable Autoincrement
-        setOrAdd(new Property("Bld_autoIncrement", "Bool", "false"), buildSpecification);
-        debug("Autoincrement set to false");
+        // Determine build type
+        let type = buildSpecification.attr_Type;
+        let oldDestDir = "";
+        let newDestPath = "";
 
-        if (majorVersion >= 0) {
-            setOrAdd(new Property("Bld_version.major", "Int", majorVersion.toString()), buildSpecification);
-            console.log("Updated Major version to: ", majorVersion);
-        }
-        if (minorVersion >= 0) {
-            setOrAdd(new Property("Bld_version.minor", "Int", minorVersion.toString()), buildSpecification);
-            console.log("Updated Minor version to: ", minorVersion);
-        }
-        if (patchVersion >= 0) {
-            setOrAdd(new Property("Bld_version.patch", "Int", patchVersion.toString()), buildSpecification);
-            console.log("Updated Patch version to: ", patchVersion);
-        }
-        if (buildVersion >= 0) {
-            setOrAdd(new Property("Bld_version.build", "Int", buildVersion.toString()), buildSpecification);
-            console.log("Updated Build version to: ", buildVersion);
+        // EXECUTE REPLACEMENTS
+        switch (type) {
+            case "EXE":
+                // Replace data for EXE builds    
+                console.log("Detected Specification type: EXE");
+
+                // Disable Autoincrement
+                setOrAdd(new Property("Bld_autoIncrement", "Bool", "false"), buildSpecification);
+                debug("Autoincrement set to false");
+
+                if (majorVersion >= 0) {
+                    setOrAdd(new Property("Bld_version.major", "Int", majorVersion.toString()), buildSpecification);
+                    console.log("Updated Major version to: ", majorVersion);
+                }
+                if (minorVersion >= 0) {
+                    setOrAdd(new Property("Bld_version.minor", "Int", minorVersion.toString()), buildSpecification);
+                    console.log("Updated Minor version to: ", minorVersion);
+                }
+                if (patchVersion >= 0) {
+                    setOrAdd(new Property("Bld_version.patch", "Int", patchVersion.toString()), buildSpecification);
+                    console.log("Updated Patch version to: ", patchVersion);
+                }
+                if (buildVersion >= 0) {
+                    setOrAdd(new Property("Bld_version.build", "Int", buildVersion.toString()), buildSpecification);
+                    console.log("Updated Build version to: ", buildVersion);
+                }
+
+                if (companyName != undefined) {
+                    setOrAdd(new Property("TgtF_companyName", "Str", companyName), buildSpecification);
+                    console.log("Updated Company Name to: ", companyName);
+                }
+
+                if (fileDescription != undefined) {
+                    setOrAdd(new Property("TgtF_fileDescription", "Str", fileDescription), buildSpecification);
+                    console.log("Updated File Description to: ", fileDescription);
+                }
+
+                if (internalName != undefined) {
+                    setOrAdd(new Property("TgtF_internalName", "Str", internalName), buildSpecification);
+                    console.log("Updated Internal Name to: ", internalName);
+                }
+
+                if (copyright != undefined) {
+                    setOrAdd(new Property("TgtF_legalCopyright", "Str", copyright), buildSpecification);
+                    console.log("Updated Copyright to: ", copyright);
+                }
+
+                if (productName != undefined) {
+                    setOrAdd(new Property("TgtF_productName", "Str", productName), buildSpecification);
+                    console.log("Updated Product Name to: ", productName);
+                }
+
+                // Update output directory
+                removeProperty("Bld_localDestDirType", buildSpecification);
+                var localDestDirProp = (<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "Bld_localDestDir")[0];
+                oldDestDir = localDestDirProp.text;
+                console.log("Old output folder: ", oldDestDir);
+                newDestPath = "/" + outputDirectory.replace(/\\/g, "/").replace(":", "");
+                console.log("New output folder:", newDestPath);
+
+                // Update all Destination paths
+                var count = parseInt((<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "DestinationCount")[0].text);
+                for (let index = 0; index < count; index++) {
+                    setOrAdd(new Property("Destination[" + index + "].path.type", "Str", "&lt;none&gt;"), buildSpecification);
+                }
+
+                break;
+
+            case "{E661DAE2-7517-431F-AC41-30807A3BDA38}":
+                console.log("Detected Specification type: Package");
+
+                // Disable Autoincrement
+                setOrAdd(new Property("PKG_autoIncrementBuild", "Bool", "false"), buildSpecification);
+                debug("Autoincrement set to false");
+
+                // Set version number
+                let version = majorVersion + "." + minorVersion + "." + patchVersion + "." + buildVersion;
+                console.log("Set version to " + version);
+                setOrAdd(new Property("PKG_version.major", "Str", version), buildSpecification);
+                setOrAdd(new Property("PKG_displayVersion", "Str", version), buildSpecification);
+                debug("Version number set");
+
+
+                if (fileDescription != undefined) {
+                    setOrAdd(new Property("PKG_description", "Str", fileDescription), buildSpecification);
+                    console.log("Updated File Description to: ", fileDescription);
+                }
+
+                if (internalName != undefined) {
+                    setOrAdd(new Property("PKG_packageName", "Str", internalName), buildSpecification);
+                    console.log("Updated PKG_packageName to: ", internalName);
+                }
+
+                // if (copyright != undefined) {
+                //     setOrAdd(new Property("TgtF_legalCopyright", "Str", copyright), buildSpecification);
+                //     console.log("Updated Copyright to: ", copyright);
+                // }
+
+                if (productName != undefined) {
+                    setOrAdd(new Property("PKG_displayName", "Str", productName), buildSpecification);
+                    console.log("Updated PKG_displayName Name to: ", productName);
+                }
+
+                // Update output directory
+                var localDestDirProp = (<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "PKG_output")[0];
+                removeProperty("PKG_output", buildSpecification);
+                oldDestDir = localDestDirProp.text;
+                console.log("Old output folder: ", oldDestDir);
+                var projectDir = path.dirname(projectfile);
+                newDestPath = path.relative(projectDir, outputDirectory).replace("\\", "/");
+                console.log("New output folder:", newDestPath);
+
+                // Update all Destination paths
+                setOrAdd(new Property("PKG_output", "Path", newDestPath), buildSpecification);
+
+                break;
+            default:
+                error("Build Specification type '" + type + "' not yet supported");
+                throw "Build Specification type '" + type + "' not yet supported";
         }
 
-        if (companyName != undefined) {
-            setOrAdd(new Property("TgtF_companyName", "Str", companyName), buildSpecification);
-            console.log("Updated Company Name to: ", companyName);
-        }
 
-        if (fileDescription != undefined) {
-            setOrAdd(new Property("TgtF_fileDescription", "Str", fileDescription), buildSpecification);
-            console.log("Updated File Description to: ", fileDescription);
-        }
-
-        if (internalName != undefined) {
-            setOrAdd(new Property("TgtF_internalName", "Str", internalName), buildSpecification);
-            console.log("Updated Internal Name to: ", internalName);
-        }
-
-        if (copyright != undefined) {
-            setOrAdd(new Property("TgtF_legalCopyright", "Str", copyright), buildSpecification);
-            console.log("Updated Copyright to: ", copyright);
-        }
-
-        if (productName != undefined) {
-            setOrAdd(new Property("TgtF_productName", "Str", productName), buildSpecification);
-            console.log("Updated Product Name to: ", productName);
-        }
-
-        // Update output directory
-        removeProperty("Bld_localDestDirType", buildSpecification);
-        var localDestDirProp = (<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "Bld_localDestDir")[0];
-        var oldDestDir = localDestDirProp.text;
-        console.log("Old output folder: ", oldDestDir);
-        var newDestPath = "/" + outputDirectory.replace(/\\/g, "/").replace(":", "");
-        console.log("New output folder:", newDestPath);
-
-        // Update all Destination paths
-        var count = parseInt((<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "DestinationCount")[0].text);
-        for (let index = 0; index < count; index++) {
-            setOrAdd(new Property("Destination[" + index + "].path.type", "Str", "&lt;none&gt;"), buildSpecification);
-        }
 
         // Write back 
         var toXml = new parserToXml(options);
@@ -285,5 +353,7 @@ function searchItemByType(type: string, item: Item): Item | null {
     }
     return null;
 }
+
+
 
 run();
