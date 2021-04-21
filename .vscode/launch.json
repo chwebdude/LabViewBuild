@@ -16,8 +16,8 @@
       "env": {
         "TASK_TEST_TRACE": "1",
         "NODE_ENV": "DEVELOPMENT",
-        "INPUT_projectFile": "${workspaceFolder}/test-project/prj.lvproj",
-        "INPUT_buildSpecName": "AlphaGuard DF50-2000 - App",
+        "INPUT_projectFile": "${workspaceFolder}/MultiplicationUnitTest/MultiplicationUnitTest.lvproj",
+        "INPUT_buildSpecName": "Multiplication",
         "INPUT_targetName": "My Computer",
         "INPUT_outputDirectory": "${workspaceFolder}/test-out",
         "INPUT_portNumber": "1234",
@@ -39,8 +39,8 @@
         "env": {
           "TASK_TEST_TRACE": "1",
           "NODE_ENV": "DEVELOPMENT",
-          "INPUT_projectFile": "${workspaceFolder}/test-project/prj.lvproj",
-          "INPUT_buildSpecName": "AlphaGuard DF50-2000 - Package",
+          "INPUT_projectFile": "${workspaceFolder}/MultiplicationUnitTest/MultiplicationUnitTest.lvproj",
+          "INPUT_buildSpecName": "Multiplication - Package",
           "INPUT_targetName": "My Computer",
           "INPUT_outputDirectory": "${workspaceFolder}/test-out",
           "INPUT_portNumber": "1234",
