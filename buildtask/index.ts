@@ -93,18 +93,20 @@ async function run() {
             throw er;
         }
 
-        let buildSpecifications: Item;
+        // Get all build specifications
+        let buildSepcificationsNode: Item;
         try {
-            buildSpecifications = <Item>searchItemByType("Build", target);
-            debug("Buildspecifications selected");
-        } catch (ex) {
-            error("Buildspecification named '" + target + "' not found in '" + targetName + "'");
+            buildSepcificationsNode = <Item>searchItem("Build Specifications", target);
+            debug("Item with name 'Build Specifications' selected. Hint: the name 'Build Specifications' is not settable by the build task");
+        } catch(ex) {
+            error("Node 'Build Specifications' not found");
             throw ex;
         }
 
+        // Get specified build specification
         let buildSpecification: Item;
         try {
-            buildSpecification = <Item>searchItem(buildSpecName, buildSpecifications);
+            buildSpecification = <Item>searchItem(buildSpecName, buildSepcificationsNode);
             console.log("##vso[task.debug]Buildspecification selected");
         } catch (ex) {
             error("Buildspecification named '" + buildSpecName + "' not found");
