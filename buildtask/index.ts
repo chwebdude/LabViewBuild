@@ -66,7 +66,7 @@ async function run() {
 
 
         var content = fs.readFileSync(projectfile).toString();
-        console.log("##vso[task.debug]Filecontent read");
+        debug("Filecontent read");
 
         var options = {
             attributeNamePrefix: "attr_",
@@ -80,14 +80,14 @@ async function run() {
         };
 
         var obj = <LvFile>parser.parse(content, options);
-        console.log("##vso[task.debug]File parsed");
+        debug("File parsed");
 
 
         // Select data 
         var target: Item;
         try {
             target = getTarget(targetName, obj);
-            console.log("##vso[task.debug]Target selected");
+            debug("Target selected");
         } catch (er) {
             error("Target named '" + targetName + "' not found");
             throw er;
@@ -107,7 +107,7 @@ async function run() {
         let buildSpecification: Item;
         try {
             buildSpecification = <Item>searchItem(buildSpecName, buildSepcificationsNode);
-            console.log("##vso[task.debug]Buildspecification selected");
+            debug("Buildspecification selected");
         } catch (ex) {
             error("Buildspecification named '" + buildSpecName + "' not found");
             throw ex;
@@ -116,7 +116,7 @@ async function run() {
 
         // Disable Autoincrement
         setOrAdd(new Property("Bld_autoIncrement", "Bool", "false"), buildSpecification);
-        console.log("##vso[task.debug]Autoincrement set to false");
+        debug("Autoincrement set to false");
 
         if (majorVersion >= 0) {
             setOrAdd(new Property("Bld_version.major", "Int", majorVersion.toString()), buildSpecification);
