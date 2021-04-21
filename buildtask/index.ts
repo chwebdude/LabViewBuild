@@ -265,7 +265,8 @@ async function run() {
                 var arg: string[] = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-PortNumber", portNumber.toString(), "-LogFilePath", logfilePath];
                 var runner: trm.ToolRunner = tl.tool(clipath).arg(arg);
                 var result = runner.execSync();
-                console.log("Result Code" + result);
+                console.log("Result Code" + result.code);
+                console.log(JSON.stringify(result));
 
                 if (result.code == 0)
                     return;
