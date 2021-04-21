@@ -18,7 +18,7 @@
         "NODE_ENV": "DEVELOPMENT",
         "INPUT_projectFile": "${workspaceFolder}/test-project/prj.lvproj",
         "INPUT_buildSpecName": "AlphaGuard DF50-2000 - App",
-        "INPUT_targetName": "targetName",
+        "INPUT_targetName": "My Computer",
         "INPUT_outputDirectory": "${workspaceFolder}/test-out",
         "INPUT_portNumber": "1234",
         "INPUT_clipath": "test"

@@ -39,11 +39,11 @@ interface LvFile {
 
 async function run() {
     try {
-        const projectfile = <string> tl.getPathInput('projectFile', true);
-        const buildSpecName = <string> tl.getInput('buildSpecName', true);
-        const targetName = <string> tl.getInput('targetName', true);
-        var outputDirectory = tl.getPathInput('outputDirectory', true);        
-        outputDirectory = tl.resolve(outputDirectory);                
+        const projectfile = <string>tl.getPathInput('projectFile', true);
+        const buildSpecName = <string>tl.getInput('buildSpecName', true);
+        const targetName = <string>tl.getInput('targetName', true);
+        var outputDirectory = tl.getPathInput('outputDirectory', true);
+        outputDirectory = tl.resolve(outputDirectory);
 
         const majorVersion: number = parseInt(<string>tl.getInput('majorVersion'));
         const minorVersion: number = parseInt(<string>tl.getInput('minorVersion'));
@@ -64,7 +64,7 @@ async function run() {
         console.log('Target Name:', targetName);
         console.log('Build specification:', buildSpecName);
 
-        
+
         var content = fs.readFileSync(projectfile).toString();
         console.log("##vso[task.debug]Filecontent read");
 
@@ -83,15 +83,34 @@ async function run() {
         console.log("##vso[task.debug]File parsed");
 
 
-        // Select data        
-        var target = getTarget(targetName, obj);
-        console.log("##vso[task.debug]Target selected");
+        // Select data 
+        var target: Item;
+        try {
+            target = getTarget(targetName, obj);
+            console.log("##vso[task.debug]Target selected");
+        } catch (er) {
+            error("Target named '" + targetName + "' not found");
+            throw er;
+        }
 
-        var buildSpecifications = <Item>searchItemByType("Build", target);
-        console.log("##vso[task.debug]Buildspecifications selected");
+        let buildSpecifications: Item;
+        try {
+            buildSpecifications = <Item>searchItemByType("Build", target);
+            debug("Buildspecifications selected");
+        } catch (ex) {
+            error("Buildspecification named '" + target + "' not found in '" + targetName + "'");
+            throw ex;
+        }
 
-        var buildSpecification = <Item>searchItem(buildSpecName, buildSpecifications);
-        console.log("##vso[task.debug]Buildspecification selected");
+        let buildSpecification: Item;
+        try {
+            buildSpecification = <Item>searchItem(buildSpecName, buildSpecifications);
+            console.log("##vso[task.debug]Buildspecification selected");
+        } catch (ex) {
+            error("Buildspecification named '" + buildSpecName + "' not found");
+            throw ex;
+        }
+
 
         // Disable Autoincrement
         setOrAdd(new Property("Bld_autoIncrement", "Bool", "false"), buildSpecification);
@@ -99,7 +118,7 @@ async function run() {
 
         if (majorVersion >= 0) {
             setOrAdd(new Property("Bld_version.major", "Int", majorVersion.toString()), buildSpecification);
-            console.log("Updated Major version to: ", majorVersion);            
+            console.log("Updated Major version to: ", majorVersion);
         }
         if (minorVersion >= 0) {
             setOrAdd(new Property("Bld_version.minor", "Int", minorVersion.toString()), buildSpecification);
@@ -145,12 +164,12 @@ async function run() {
         var oldDestDir = localDestDirProp.text;
         console.log("Old output folder: ", oldDestDir);
         var newDestPath = "/" + outputDirectory.replace(/\\/g, "/").replace(":", "");
-        console.log("New output folder:", newDestPath);      
+        console.log("New output folder:", newDestPath);
 
         // Update all Destination paths
-        var count =parseInt((<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "DestinationCount")[0].text);
+        var count = parseInt((<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "DestinationCount")[0].text);
         for (let index = 0; index < count; index++) {
-            setOrAdd(new Property("Destination["+ index +"].path.type", "Str", "&lt;none&gt;"), buildSpecification);
+            setOrAdd(new Property("Destination[" + index + "].path.type", "Str", "&lt;none&gt;"), buildSpecification);
         }
 
         // Write back 
@@ -173,18 +192,18 @@ async function run() {
 
                 console.log("Starting build...");
                 var logfilePath = tl.resolve("labviewbuild.log");
-                var arg : string[] = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-PortNumber", portNumber.toString(), "-LogFilePath", logfilePath];
+                var arg: string[] = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-PortNumber", portNumber.toString(), "-LogFilePath", logfilePath];
                 var runner: trm.ToolRunner = tl.tool(clipath).arg(arg);
                 var result = runner.execSync();
                 console.log("Result Code" + result);
-                
-                if(result.code == 0)
+
+                if (result.code == 0)
                     return;
             } catch (e) {
                 tl.warning("Failed");
                 tl.warning(e.message);
             }
-            
+
         }
         tl.setResult(tl.TaskResult.Failed, "Failed to build project");
     }
@@ -203,7 +222,7 @@ function setOrAdd(newProperty: IProperty, item: Item) {
     }
 }
 
-function removeProperty(propertyName:string, item:Item){
+function removeProperty(propertyName: string, item: Item) {
     item.Property = (<Property[]>item.Property).filter(prop => prop.attr_Name != propertyName);
 }
 
