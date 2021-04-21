@@ -1,0 +1,31 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program",
+      "program": "${workspaceFolder}/buildtask/index.ts",
+      "preLaunchTask": "tsc: build - buildtask/tsconfig.json",
+      "outFiles": ["${workspaceFolder}/buildtask/index.js"],
+      "runtimeExecutable": null,
+      "runtimeArgs": ["--nolazy"],
+      "env": {
+        "TASK_TEST_TRACE": "1",
+        "NODE_ENV": "DEVELOPMENT",
+        "INPUT_projectFile": "${workspaceFolder}/test-project/prj.lvproj",
+        "INPUT_buildSpecName": "AlphaGuard DF50-2000 - App",
+        "INPUT_targetName": "targetName",
+        "INPUT_outputDirectory": "${workspaceFolder}/test-out",
+        "INPUT_portNumber": "1234",
+        "INPUT_clipath": "test"
+      },
+      "stopOnEntry": false,
+      "console": "integratedTerminal",
+      "sourceMaps": true
+    }
+  ]
+}

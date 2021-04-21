@@ -332,3 +332,4 @@ ASALocalRun/
 *.vsix
 *.js
 *.taskkey
+*.js.map
