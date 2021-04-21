@@ -141,6 +141,7 @@ async function run() {
 
         // Update output directory
         removeProperty("Bld_localDestDirType", buildSpecification);
+        console.log("Get local destination directory property named 'Bld_localDestDir'...")
         var localDestDirProp = (<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "Bld_localDestDir")[0];
         var oldDestDir = localDestDirProp.text;
         console.log("Old output folder: ", oldDestDir);
@@ -148,12 +149,15 @@ async function run() {
         console.log("New output folder:", newDestPath);      
 
         // Update all Destination paths
-        var count =parseInt((<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "DestinationCount")[0].text);
+        console.log("Get property 'DestinationCount'...")
+        var count = parseInt((<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "DestinationCount")[0].text);
         for (let index = 0; index < count; index++) {
             setOrAdd(new Property("Destination["+ index +"].path.type", "Str", "&lt;none&gt;"), buildSpecification);
         }
+        console.log('Destination paths updated');
 
         // Write back 
+        console.log("Writing XML...");
         var toXml = new parserToXml(options);
         var xml = <string>toXml.parse(obj);
 
@@ -203,8 +207,10 @@ function setOrAdd(newProperty: IProperty, item: Item) {
     }
 }
 
-function removeProperty(propertyName:string, item:Item){
+function removeProperty(propertyName:string, item:Item){    
+    console.log("Removing property... "+propertyName)
     item.Property = (<Property[]>item.Property).filter(prop => prop.attr_Name != propertyName);
+    console.log("   ...Removed!");
 }
 
 function getTarget(name: string, lvFile: LvFile): Item {
