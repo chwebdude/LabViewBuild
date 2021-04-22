@@ -17,3 +17,7 @@ A task to build NI LabVIEW projects. You can even set the verison of the resulti
 You need to have a licenced LabVIEW version on the build server. At the same time the VI Server needs to be activated (Tools/Options/VI Server).
 
 ![VI Server](https://raw.githubusercontent.com/chwebdude/LabViewBuild/master/images/VIServer.png)
+
+## Jenkins Users
+
+If you are using Jenkins as your build service, consider to use the excellent Jenkins Plugin from [Kubes](https://www.kubes.ch/jenkins/).
