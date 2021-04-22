@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
     "id": "19b1699a-c437-45a3-a642-03ea21ffbb48",
     "name": "labview-build",
     "friendlyName": "NI LabView build",
@@ -30,6 +31,17 @@
         }
     ],
     "inputs": [
+        {
+            "name": "buildType",
+            "type":"pickList",
+            "defaultValue": "exe",
+            "options": {
+                "exe": "Application (EXE)",
+                "package": "Package"
+            },
+            "label": "Build Specification Type"
+        },
+
         {
             "name": "projectFile",
             "type": "filePath",

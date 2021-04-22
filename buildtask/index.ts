@@ -44,6 +44,9 @@ async function run() {
         const targetName = <string>tl.getInput('targetName', true);
         var outputDirectory = tl.getPathInput('outputDirectory', true);
         outputDirectory = tl.resolve(outputDirectory);
+        var buildType = <string>tl.getInput('buildType');
+        if (buildType == undefined)
+            buildType = "exe";
 
         const majorVersion: number = parseInt(<string>tl.getInput('majorVersion'));
         const minorVersion: number = parseInt(<string>tl.getInput('minorVersion'));
@@ -60,6 +63,7 @@ async function run() {
         const retries: number = parseInt(<string>tl.getInput('retries'));
         const clipath = <string>tl.getInput('clipath', true);
 
+        console.log('Specified Build Type: ', buildType);
         console.log('Using project file:', projectfile);
         console.log('Target Name:', targetName);
         console.log('Build specification:', buildSpecName);
@@ -113,15 +117,9 @@ async function run() {
             throw ex;
         }
 
-
-        // Determine build type
-        let type = buildSpecification.attr_Type;
-        let oldDestDir = "";
-        let newDestPath = "";
-
         // EXECUTE REPLACEMENTS
-        switch (type) {
-            case "EXE":
+        switch (buildType) {
+            case "exe":
                 // Replace data for EXE builds    
                 console.log("Detected Specification type: EXE");
 
@@ -187,7 +185,7 @@ async function run() {
 
                 break;
 
-            case "{E661DAE2-7517-431F-AC41-30807A3BDA38}":
+            case "package":
                 console.log("Detected Specification type: Package");
 
                 // Disable Autoincrement
