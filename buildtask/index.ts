@@ -227,7 +227,7 @@ async function run() {
                 removeProperty("PKG_output", buildSpecification);
                 oldDestDir = localDestDirProp.text;
                 console.log("Old output folder: ", oldDestDir);
-                newDestPath = "/" + outputDirectory.replace(/\\/g, "/").replace(":", "") + "/package.nipkg";
+                newDestPath = "/" + outputDirectory.replace(/\\/g, "/").replace(":", "");
                 console.log("New output folder:", newDestPath);
 
                 // Update all Destination paths
