@@ -44,7 +44,8 @@
           "INPUT_targetName": "My Computer",
           "INPUT_outputDirectory": "${workspaceFolder}/test-out",
           "INPUT_portNumber": "1234",
-          "INPUT_clipath": "test"
+          "INPUT_clipath": "test",
+          "INPUT_buildType": "package"
         },
         "stopOnEntry": false,
         "console": "integratedTerminal",
