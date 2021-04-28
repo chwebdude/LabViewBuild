@@ -247,6 +247,10 @@ function build(projectfile: string, outputDirectory: string | null, options: any
                 console.log("Updated PKG_displayName Name to: ", productName);
             }
 
+            // Disable add to feed
+            setOrAdd(new Property("NIPKG_addToFeed", "Bool", "false"), buildSpecification);
+            console.log("Disabled option NIPKG_addToFeed");
+
             // Update output directory
             var localDestDirProp = (<IProperty[]>buildSpecification.Property).filter(prop => prop.attr_Name == "PKG_output")[0];
             removeProperty("PKG_output", buildSpecification);
@@ -303,6 +307,7 @@ function executeCli(projectfile: string, targetName: string, buildSpecName: stri
     // Execute Build
     for (let i = 1; i <= retries; i++) {
         try {
+            console.log("-------------------")
             console.log("Build attempt " + i);
 
             console.log("Starting build...");
@@ -313,13 +318,15 @@ function executeCli(projectfile: string, targetName: string, buildSpecName: stri
             console.log("Result Code" + result.code);
             console.log(JSON.stringify(result));
 
-            if (result.code == 0)
+            if (result.code == 0) {
+                console.log("-------------------")
                 return;
+            }
         } catch (e) {
             tl.warning("Failed");
             tl.warning(e.message);
         }
-
+        console.log("-------------------")
     }
     tl.setResult(tl.TaskResult.Failed, "Failed to build project");
 }
