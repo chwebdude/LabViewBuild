@@ -223,6 +223,7 @@ function build(projectfile: string, outputDirectory: string | null, options: any
             let version = majorVersion + "." + minorVersion + "." + patchVersion + "." + buildVersion;
             console.log("Set version to " + version);
             setOrAdd(new Property("PKG_version.major", "Str", version), buildSpecification);
+            setOrAdd(new Property("PKG_version", "Str", version), buildSpecification);            
             setOrAdd(new Property("PKG_displayVersion", "Str", version), buildSpecification);
             debug("Version number set");
 
