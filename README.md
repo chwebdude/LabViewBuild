@@ -12,6 +12,10 @@ A task to build NI LabVIEW projects. You can even set the verison of the resulti
 
 - Set additional information like company name, file description and copyright.
 
+### Package Build
+
+When a package build is selected, all dependencies are built first. Make sure, that on the same build job these dependencies are not built yet. So ideally use this plugin only once in your job.
+
 ## Prepartion
 
 You need to have a licenced LabVIEW version on the build server. At the same time the VI Server needs to be activated (Tools/Options/VI Server).
