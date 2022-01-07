@@ -160,6 +160,14 @@
             "groupName": "execution"
         },
         {
+            "name": "labViewPath",
+            "type": "string",
+            "label": "LabVIEW Path",
+            "defaultValue": "C:\\Program Files (x86)\\National Instruments\\LabVIEW 2020\\LabVIEW.exe",
+            "groupName": "execution",
+            "required": true            
+        },
+        {
             "name": "retries",
             "type": "int",
             "label": "Retries",

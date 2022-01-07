@@ -59,6 +59,7 @@ async function run() {
         const portNumber: number = parseInt(<string>tl.getInput('portNumber', true));
         const retries: number = parseInt(<string>tl.getInput('retries'));
         const clipath = <string>tl.getInput('clipath', true);
+        const labviewPath = <string>tl.getInput('labViewPath', true);
 
         console.log('Using project file:', projectfile);
         console.log('Target Name:', targetName);
@@ -173,7 +174,7 @@ async function run() {
 
                 console.log("Starting build...");
                 var logfilePath = tl.resolve("labviewbuild.log");
-                var arg : string[] = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-PortNumber", portNumber.toString(), "-LogFilePath", logfilePath];
+                var arg : string[] = ["-OperationName", "ExecuteBuildSpec", "-ProjectPath", projectfile, "-TargetName", targetName, "-BuildSpecName", buildSpecName, "-PortNumber", portNumber.toString(), "-LogFilePath", logfilePath, "-LabVIEWPath", labviewPath];
                 var runner: trm.ToolRunner = tl.tool(clipath).arg(arg);
                 var result = runner.execSync();
                 console.log("Result Code" + result);
